@@ -1,0 +1,25 @@
+---
+export interface Props {
+  title?: string;
+  language?: string;
+  children?: any;
+}
+
+const { title, language = 'javascript' } = Astro.props;
+---
+
+<div class="my-6 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
+  {title && (
+    <div class="bg-gray-100 dark:bg-gray-800 px-4 py-2 border-b border-gray-200 dark:border-gray-700">
+      <h4 class="text-sm font-semibold text-gray-700 dark:text-gray-300">{title}</h4>
+    </div>
+  )}
+  <div class="relative">
+    <pre class="p-4 bg-gray-50 dark:bg-gray-900 overflow-x-auto"><code class={`language-${language}`}><slot /></code></pre>
+    {language && (
+      <span class="absolute top-2 right-2 text-xs text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 px-2 py-1 rounded">
+        {language}
+      </span>
+    )}
+  </div>
+</div>

@@ -1,4 +1,14 @@
-html {
+@import "tailwindcss";
+@plugin '@tailwindcss/typography';
+
+@custom-variant dark (&:where(.dark, .dark *));
+/* @layer components {
+  .btn {
+    @apply px-4 py-2 bg-blue-800 text-white rounded;
+  }
+} */
+
+/* html {
   background-color: #f1f5f9;
   font-family: sans-serif;
 }
@@ -18,7 +28,7 @@ body {
 h1 {
   margin: 1rem 0;
   font-size: 2.5rem;
-}
+} */
 
 /* nav styles */
 
@@ -83,11 +93,11 @@ h1 {
 
 }
 
-html.dark {
+/* html.dark {
   background-color: #0d0950;
   color: #fff;
 }
 
 .dark .nav-links a {
   color: #fff;
-}
+} */

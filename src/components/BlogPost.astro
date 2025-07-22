@@ -1,5 +1,88 @@
 ---
-const {url, title} = Astro.props;
+export interface Props {
+  url: string;
+  title: string;
+  description?: string;
+  image?: {
+    url: string;
+    alt: string;
+  };
+  pubDate?: Date;
+  author?: string;
+  tags?: string[];
+}
+
+const { url, title, description, image, pubDate, author, tags } = Astro.props;
+
+// Format date for display
+const formatDate = (date: Date) => {
+  return new Intl.DateTimeFormat('es-ES', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  }).format(date);
+};
 ---
 
-<li><a href={url}>{title}</a></li>
+<article class="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group hover:-translate-y-1">
+  <a href={url} class="block">
+    {image && (
+      <div class="relative overflow-hidden">
+        <img 
+          src={image.url} 
+          alt={image.alt}
+          class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+          loading="lazy"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+      </div>
+    )}
+    
+    <div class="p-6">
+      <div class="flex items-center justify-between mb-3">
+        {pubDate && (
+          <time class="text-sm text-gray-500 dark:text-gray-400">
+            {formatDate(pubDate)}
+          </time>
+        )}
+        {author && (
+          <span class="text-sm text-blue-600 dark:text-blue-400 font-medium">
+            {author}
+          </span>
+        )}
+      </div>
+      
+      <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+        {title}
+      </h2>
+      
+      {description && (
+        <p class="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">
+          {description}
+        </p>
+      )}
+      
+      {tags && tags.length > 0 && (
+        <div class="flex flex-wrap gap-2">
+          {tags.slice(0, 3).map(tag => (
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-300">
+              #{tag}
+            </span>
+          ))}
+          {tags.length > 3 && (
+            <span class="text-xs text-gray-500 dark:text-gray-400">
+              +{tags.length - 3} más
+            </span>
+          )}
+        </div>
+      )}
+      
+      <div class="mt-4 flex items-center text-blue-600 dark:text-blue-400 group-hover:text-blue-700 dark:group-hover:text-blue-300">
+        <span class="text-sm font-medium">Leer más</span>
+        <svg class="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        </svg>
+      </div>
+    </div>
+  </a>
+</article>

@@ -1,9 +1,190 @@
 ---
-import Greeting from '../components/Greeting';
+import { getCollection } from "astro:content";
+import BlogPost from '../components/BlogPost.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
-const pageTitle = "Home Page";
+
+// Get the latest blog posts for featured content
+const allPosts = await getCollection("blog");
+allPosts.sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime());
+
+// Get the latest 3 posts for the home page
+const featuredPosts = allPosts.slice(0, 3);
+
+const pageTitle = "Home - Mi Blog de Astro";
 ---
+
 <BaseLayout pageTitle={pageTitle}>
-  <h2>My awesome blog subtitle</h2>
-  <Greeting client:load messages={["Hej", "Hallo", "Hola", "Habari"]} />
+  <div class="max-w-7xl mx-auto px-4 py-8">
+    <!-- Hero Section -->
+    <section class="text-center mb-16">
+      <div class="mb-8">
+        <h1 class="text-5xl md:text-7xl font-bold text-gray-900 dark:text-white mb-6">
+          Bienvenido a mi 
+          <span class="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            Blog
+          </span>
+        </h1>
+        <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8">
+          Explorando el mundo del desarrollo web moderno con 
+          <strong>Astro</strong>, <strong>Tailwind CSS</strong> y las mejores prácticas.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <a 
+            href="/blog" 
+            class="inline-flex items-center px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold text-lg transition-colors shadow-lg hover:shadow-xl"
+          >
+            Explorar Blog
+            <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+            </svg>
+          </a>
+          <a 
+            href="/about" 
+            class="inline-flex items-center px-8 py-3 bg-white dark:bg-gray-800 border-2 border-blue-600 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-gray-700 rounded-lg font-semibold text-lg transition-colors"
+          >
+            Sobre mí
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="mb-16">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="text-center p-6 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 rounded-xl border border-blue-200 dark:border-blue-700">
+          <div class="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2">
+            {allPosts.length}
+          </div>
+          <div class="text-gray-700 dark:text-gray-300 font-medium">
+            Artículos Publicados
+          </div>
+        </div>
+        <div class="text-center p-6 bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20 rounded-xl border border-purple-200 dark:border-purple-700">
+          <div class="text-3xl font-bold text-purple-600 dark:text-purple-400 mb-2">
+            4
+          </div>
+          <div class="text-gray-700 dark:text-gray-300 font-medium">
+            Tecnologías Cubiertas
+          </div>
+        </div>
+        <div class="text-center p-6 bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 rounded-xl border border-green-200 dark:border-green-700">
+          <div class="text-3xl font-bold text-green-600 dark:text-green-400 mb-2">
+            ∞
+          </div>
+          <div class="text-gray-700 dark:text-gray-300 font-medium">
+            Aprendizaje Continuo
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Posts Section -->
+    {featuredPosts.length > 0 && (
+      <section class="mb-16">
+        <div class="text-center mb-10">
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+            Últimos Artículos
+          </h2>
+          <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+            Descubre las últimas publicaciones sobre desarrollo web, tutoriales prácticos y reflexiones técnicas.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-10">
+          {featuredPosts.map((post) => (
+            <BlogPost 
+              url={`/posts/${post.id}/`} 
+              title={post.data.title}
+              description={post.data.description}
+              image={post.data.image}
+              pubDate={post.data.pubDate}
+              author={post.data.author}
+              tags={post.data.tags}
+            />
+          ))}
+        </div>
+
+        <div class="text-center">
+          <a 
+            href="/blog" 
+            class="inline-flex items-center px-6 py-3 bg-gray-900 dark:bg-white hover:bg-gray-800 dark:hover:bg-gray-100 text-white dark:text-gray-900 rounded-lg font-medium transition-colors"
+          >
+            Ver todos los artículos
+            <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+            </svg>
+          </a>
+        </div>
+      </section>
+    )}
+
+    <!-- Technologies Section -->
+    <section class="mb-16">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+          Tecnologías que Exploro
+        </h2>
+        <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+          Las herramientas y frameworks que utilizo en mi día a día y sobre los que escribo.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div class="text-center p-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow">
+          <div class="text-4xl mb-3">🚀</div>
+          <h3 class="font-semibold text-gray-900 dark:text-white mb-2">Astro</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400">Framework moderno para sitios rápidos</p>
+        </div>
+        <div class="text-center p-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow">
+          <div class="text-4xl mb-3">🎨</div>
+          <h3 class="font-semibold text-gray-900 dark:text-white mb-2">Tailwind CSS</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400">Utility-first CSS framework</p>
+        </div>
+        <div class="text-center p-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow">
+          <div class="text-4xl mb-3">⚛️</div>
+          <h3 class="font-semibold text-gray-900 dark:text-white mb-2">Preact</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400">React alternativo ligero</p>
+        </div>
+        <div class="text-center p-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow">
+          <div class="text-4xl mb-3">📝</div>
+          <h3 class="font-semibold text-gray-900 dark:text-white mb-2">MDX</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400">Markdown con componentes JSX</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Newsletter/CTA Section -->
+    <section class="text-center">
+      <div class="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 md:p-12 text-white">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">
+          ¿Te gusta el contenido?
+        </h2>
+        <p class="text-xl mb-8 opacity-90 max-w-2xl mx-auto">
+          Sígueme en GitHub para estar al tanto de las últimas actualizaciones del blog y nuevos proyectos.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <a 
+            href="https://github.com/carlosmgahete/astro-blog" 
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center px-8 py-3 bg-white text-gray-900 hover:bg-gray-100 rounded-lg font-semibold text-lg transition-colors shadow-lg"
+          >
+            <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 0C4.477 0 0 4.484 0 10.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0110 4.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.942.359.31.678.921.678 1.856 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0020 10.017C20 4.484 15.522 0 10 0z" clip-rule="evenodd"></path>
+            </svg>
+            Seguir en GitHub
+          </a>
+          <a 
+            href="/rss.xml"
+            class="inline-flex items-center px-8 py-3 bg-white/10 hover:bg-white/20 text-white border border-white/30 rounded-lg font-semibold text-lg transition-colors backdrop-blur-sm"
+          >
+            <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M3.429 2.776c9.142 0 16.551 7.444 16.551 16.662A2.84 2.84 0 0117.143 22H3.143A2.84 2.84 0 01.286 19.438c0-9.218 7.409-16.662 16.571-16.662zM3.429 9.09c6.857 0 12.428 5.595 12.428 12.491A2.84 2.84 0 0113.02 24.4H3.143A2.84 2.84 0 01.286 21.581c0-6.896 5.571-12.491 12.571-12.491zM6.857 18.057a2.857 2.857 0 11-5.714 0 2.857 2.857 0 015.714 0z"></path>
+            </svg>
+            RSS Feed
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
 </BaseLayout>

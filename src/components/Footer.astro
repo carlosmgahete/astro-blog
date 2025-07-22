@@ -1,17 +1,112 @@
 ---
 import Social from "./Social.astro";
+
+const currentYear = new Date().getFullYear();
 ---
 
-<style>
-    footer {
-        display: flex;
-        gap: 1rem;
-        margin-top: 2rem;
-    }
-</style>
+<footer class="bg-gray-50 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 mt-16">
+  <div class="max-w-7xl mx-auto px-4 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- Brand & Description -->
+      <div class="space-y-4">
+        <div class="flex items-center space-x-2">
+          <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+            <span class="text-white font-bold text-sm">CB</span>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 dark:text-white">Carlos Blog</h3>
+        </div>
+        <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+          Explorando el mundo del desarrollo web moderno. Compartiendo conocimiento sobre Astro, 
+          Tailwind CSS, MDX y las mejores prácticas del desarrollo frontend.
+        </p>
+      </div>
 
-<footer>
-    <Social platform="twitter" username="astrodotbuild" />
-    <Social platform="github" username="carlosmgahete" />
-    <Social platform="youtube" username="astrodotbuild" />
+      <!-- Navigation Links -->
+      <div class="space-y-4">
+        <h4 class="text-lg font-semibold text-gray-900 dark:text-white">Navegación</h4>
+        <nav class="flex flex-col space-y-2">
+          <a 
+            href="/" 
+            class="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 text-sm"
+          >
+            Inicio
+          </a>
+          <a 
+            href="/about" 
+            class="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 text-sm"
+          >
+            Sobre mí
+          </a>
+          <a 
+            href="/blog" 
+            class="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 text-sm"
+          >
+            Blog
+          </a>
+          <a 
+            href="/tags" 
+            class="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 text-sm"
+          >
+            Etiquetas
+          </a>
+          <a 
+            href="/rss.xml" 
+            class="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 text-sm"
+          >
+            RSS Feed
+          </a>
+        </nav>
+      </div>
+
+      <!-- Social Links & Contact -->
+      <div class="space-y-4">
+        <h4 class="text-lg font-semibold text-gray-900 dark:text-white">Conecta conmigo</h4>
+        <div class="flex space-x-3">
+          <Social platform="linkedin" username="carlosmgahete" />
+          <Social platform="github" username="carlosmgahete" />
+        </div>
+        <div class="space-y-2">
+          <p class="text-sm text-gray-600 dark:text-gray-400">
+            ¿Tienes alguna pregunta o sugerencia?
+          </p>
+          <a 
+            href="mailto:carlos@munga.es" 
+            class="text-blue-600 dark:text-blue-400 hover:underline text-sm"
+          >
+            carlos@munga.es
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
+      <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+        <div class="text-sm text-gray-600 dark:text-gray-400">
+          © {currentYear} Carlos Blog. Construido con 
+          <a 
+            href="https://astro.build" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="text-blue-600 dark:text-blue-400 hover:underline font-medium"
+          >
+            Astro
+          </a> 
+          y mucho ❤️
+        </div>
+        <div class="flex items-center space-x-4 text-sm text-gray-600 dark:text-gray-400">
+          <span>Hecho en España 🇪🇸</span>
+          <a 
+            href="/rss.xml" 
+            class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200"
+            aria-label="RSS Feed"
+          >
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M3.429 2.776c9.142 0 16.551 7.444 16.551 16.662A2.84 2.84 0 0117.143 22H3.143A2.84 2.84 0 01.286 19.438c0-9.218 7.409-16.662 16.571-16.662zM3.429 9.09c6.857 0 12.428 5.595 12.428 12.491A2.84 2.84 0 0113.02 24.4H3.143A2.84 2.84 0 01.286 21.581c0-6.896 5.571-12.491 12.571-12.491zM6.857 18.057a2.857 2.857 0 11-5.714 0 2.857 2.857 0 015.714 0z"></path>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
 </footer>

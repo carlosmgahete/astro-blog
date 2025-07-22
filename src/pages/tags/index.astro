@@ -1,33 +1,142 @@
 ---
 import { getCollection } from "astro:content";
 import BaseLayout from '../../layouts/BaseLayout.astro';
+
 const allPosts = await getCollection("blog");
 const tags = [...new Set(allPosts.map((post: any) => post.data.tags).flat())];
-const pageTitle = "Tag Index";
+
+// Create tag counts for better UX
+const tagCounts = tags.map(tag => ({
+  name: tag,
+  count: allPosts.filter(post => post.data.tags.includes(tag)).length
+})).sort((a, b) => b.count - a.count);
+
+const pageTitle = "Tags - Explora por Temas";
 ---
+
 <BaseLayout pageTitle={pageTitle}>
-  <div class="tags">
-    {tags.map((tag) => (
-      <p class="tag"><a href={`/tags/${tag}`}>{tag}</a></p>
-    ))}
+  <div class="max-w-6xl mx-auto px-4 py-8">
+    <!-- Header Section -->
+    <div class="text-center mb-12">
+      <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+        Explora por Tags
+      </h1>
+      <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+        Descubre artículos organizados por temas y tecnologías. Encuentra exactamente lo que estás buscando.
+      </p>
+      <div class="mt-6 flex items-center justify-center gap-4">
+        <div class="flex items-center text-gray-500 dark:text-gray-400">
+          <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+          </svg>
+          {tags.length} temas disponibles
+        </div>
+        <div class="flex items-center text-gray-500 dark:text-gray-400">
+          <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          {allPosts.length} artículos totales
+        </div>
+      </div>
+    </div>
+
+    <!-- Tags Cloud/Grid -->
+    {tags.length === 0 ? (
+      <div class="text-center py-12">
+        <div class="mx-auto w-24 h-24 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mb-4">
+          <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+          No hay tags disponibles
+        </h3>
+        <p class="text-gray-600 dark:text-gray-300">
+          Los tags aparecerán automáticamente cuando publiques artículos.
+        </p>
+      </div>
+    ) : (
+      <div class="space-y-8">
+        <!-- Popular Tags Section -->
+        <div>
+          <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6 text-center">
+            Tags Más Populares
+          </h2>
+          <div class="flex flex-wrap gap-3 justify-center">
+            {tagCounts.slice(0, 6).map((tag) => (
+              <a 
+                href={`/tags/${tag.name}`}
+                class="group relative inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white rounded-xl font-semibold text-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+              >
+                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                </svg>
+                {tag.name}
+                <span class="ml-2 px-2 py-1 bg-white/20 rounded-full text-sm font-medium">
+                  {tag.count}
+                </span>
+                <div class="absolute inset-0 bg-white/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <!-- All Tags Grid -->
+        <div>
+          <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-6 text-center">
+            Todos los Tags
+          </h2>
+          <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {tagCounts.map((tag) => (
+              <a 
+                href={`/tags/${tag.name}`}
+                class="group p-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg hover:shadow-lg hover:border-blue-300 dark:hover:border-blue-600 transition-all duration-300 transform hover:-translate-y-1"
+              >
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center">
+                    <div class="w-3 h-3 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full mr-3"></div>
+                    <span class="font-medium text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                      {tag.name}
+                    </span>
+                  </div>
+                  <span class="text-sm text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-full">
+                    {tag.count}
+                  </span>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+    )}
+
+    <!-- Back to Blog CTA -->
+    <div class="mt-16 text-center">
+      <div class="bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-2xl p-8 border border-gray-200 dark:border-gray-700">
+        <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+          ¿No encuentras lo que buscas?
+        </h3>
+        <p class="text-gray-600 dark:text-gray-300 mb-6">
+          Explora todos los artículos o vuelve al inicio para descubrir más contenido.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <a 
+            href="/blog" 
+            class="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors"
+          >
+            Ver Todos los Artículos
+            <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+            </svg>
+          </a>
+          <a 
+            href="/" 
+            class="inline-flex items-center px-6 py-3 bg-gray-600 hover:bg-gray-700 text-white rounded-lg font-medium transition-colors"
+          >
+            Volver al Inicio
+          </a>
+        </div>
+      </div>
+    </div>
   </div>
 </BaseLayout>
-<style>
-  a {
-    color: #00539F;
-  }
-
-  .tags {
-    display: flex;
-    flex-wrap: wrap;
-  }
-
-  .tag {
-    margin: 0.25em;
-    border: dotted 1px #a1a1a1;
-    border-radius: .5em;
-    padding: .5em 1em;
-    font-size: 1.15em;
-    background-color: #F8FCFD;
-  }
-</style>

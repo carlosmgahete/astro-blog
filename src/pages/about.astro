@@ -1,84 +1,240 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import "../styles/global.css";
 
-const pageTitle = "About Me";
+const pageTitle = "Sobre Mí - Carlos";
 
 const identity = {
-	firstName: "Sarah",
-	country: "Canada",
-	occupation: "Technical Writer",
-	hobbies: ["photography", "birdwatching", "baseball"],
+	firstName: "Carlos",
+	role: "Desarrollador Full Stack",
+	location: "España",
+	experience: "5+ años",
+	passions: ["desarrollo web", "tecnologías modernas", "enseñar", "código limpio"],
 };
 
-const skills = ["HTML", "CSS", "JavaScript", "React", "Astro", "Writing Docs"];
+const skills = [
+	{ name: "JavaScript/TypeScript", level: "Avanzado", icon: "⚡" },
+	{ name: "Astro", level: "Intermedio", icon: "🚀" },
+	{ name: "React/Preact", level: "Avanzado", icon: "⚛️" },
+	{ name: "Node.js", level: "Avanzado", icon: "💚" },
+	{ name: "Tailwind CSS", level: "Avanzado", icon: "🎨" },
+	{ name: "Python", level: "Intermedio", icon: "🐍" },
+];
 
-const happy = true;
-const finished = true;
-const goal = 3;
-
-const skillColor = "navy";
-const fontWeight = "bold";
-const textCase = "uppercase";
+const projects = [
+	{
+		title: "Blog con Astro",
+		description: "Un blog moderno construido con Astro, Tailwind CSS y MDX para contenido interactivo.",
+		tech: ["Astro", "Tailwind", "MDX", "Preact"],
+		status: "En desarrollo"
+	},
+	{
+		title: "Aplicaciones Web",
+		description: "Desarrollo de aplicaciones full-stack usando tecnologías modernas.",
+		tech: ["React", "Node.js", "TypeScript", "Database"],
+		status: "Producción"
+	},
+];
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{pageTitle}</title>
-	</head>
-	<body>
-		<BaseLayout pageTitle={pageTitle}>
+<BaseLayout pageTitle={pageTitle}>
+  <div class="max-w-6xl mx-auto px-4 py-8">
+    <!-- Hero Section -->
+    <section class="text-center mb-16">
+      <div class="mb-8">
+        <div class="w-32 h-32 mx-auto mb-6 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-4xl font-bold shadow-xl">
+          C
+        </div>
+        <h1 class="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-4">
+          Hola, soy <span class="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Carlos</span>
+        </h1>
+        <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8">
+          {identity.role} apasionado por crear experiencias web excepcionales y compartir conocimiento a través de este blog.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <a 
+            href="/blog" 
+            class="inline-flex items-center px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold text-lg transition-colors shadow-lg hover:shadow-xl"
+          >
+            Ver mi Blog
+            <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+            </svg>
+          </a>
+          <a 
+            href="https://github.com/carlosmgahete" 
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center px-8 py-3 bg-gray-800 dark:bg-white hover:bg-gray-900 dark:hover:bg-gray-100 text-white dark:text-gray-900 rounded-lg font-semibold text-lg transition-colors"
+          >
+            <svg class="mr-2 w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 0C4.477 0 0 4.484 0 10.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0110 4.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.942.359.31.678.921.678 1.856 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0020 10.017C20 4.484 15.522 0 10 0z" clip-rule="evenodd"></path>
+            </svg>
+            GitHub
+          </a>
+        </div>
+      </div>
+    </section>
 
-			<h2>... and my new Astro site!</h2>
+    <!-- About Me Details -->
+    <section class="mb-16">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+            Mi Historia
+          </h2>
+          <div class="space-y-4 text-gray-600 dark:text-gray-300 text-lg leading-relaxed">
+            <p>
+              Soy un desarrollador full-stack con <strong>{identity.experience} de experiencia</strong> en el mundo del desarrollo web. Mi pasión por la tecnología y el aprendizaje continuo me ha llevado a crear este blog.
+            </p>
+            <p>
+              Actualmente basado en <strong>{identity.location}</strong>, me dedico a explorar las últimas tecnologías web y compartir mis descubrimientos a través de artículos prácticos y tutoriales detallados.
+            </p>
+            <p>
+              Mi objetivo es hacer que el desarrollo web sea más accesible y ayudar a otros desarrolladores a crecer en su carrera profesional.
+            </p>
+          </div>
+        </div>
 
-			<p>
-				I am working through Astro's introductory tutorial. This is the
-				second page on my website, and it's the first one I built
-				myself!
-			</p>
+        <div class="space-y-6">
+          <div class="bg-white dark:bg-gray-800 p-6 rounded-xl border border-gray-200 dark:border-gray-700 shadow-lg">
+            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
+              <svg class="w-6 h-6 mr-2 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              Mis Pasiones
+            </h3>
+            <div class="grid grid-cols-2 gap-3">
+              {identity.passions.map((passion) => (
+                <div class="flex items-center p-2 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                  <div class="w-2 h-2 bg-blue-500 rounded-full mr-3"></div>
+                  <span class="text-gray-700 dark:text-gray-300 capitalize">{passion}</span>
+                </div>
+              ))}
+            </div>
+          </div>
 
-			<p>
-				This site will update as I complete more of the tutorial, so
-				keep checking back and see how my journey is going!
-			</p>
+          <div class="bg-gradient-to-r from-purple-50 to-blue-50 dark:from-purple-900/20 dark:to-blue-900/20 p-6 rounded-xl border border-purple-200 dark:border-purple-700">
+            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+              ¿Por qué este blog?
+            </h3>
+            <p class="text-gray-600 dark:text-gray-300">
+              Creo firmemente en el poder del conocimiento compartido. Este espacio es mi forma de contribuir a la comunidad de desarrolladores y documentar mi propio viaje de aprendizaje.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-			<p>Here are a few facts about me:</p>
-			<ul>
-				<li>My name is {identity.firstName}.</li>
-				<li>
-					I live in {identity.country} and I work as a {
-						identity.occupation
-					}.
-				</li>
-				{
-					identity.hobbies.length >= 2 && (
-						<li>
-							Two of my hobbies are: {identity.hobbies[0]} and{" "}
-							{identity.hobbies[1]}
-						</li>
-					)
-				}
-			</ul>
-			<p>My skills are:</p>
-			<ul>
-				{skills.map((skill) => <li class="skill">{skill}</li>)}
-			</ul>
+    <!-- Skills Section -->
+    <section class="mb-16">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+          Tecnologías que Domino
+        </h2>
+        <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+          Estas son las principales tecnologías con las que trabajo y sobre las que escribo.
+        </p>
+      </div>
 
-			{happy && <p>I am happy to be learning Astro!</p>}
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {skills.map((skill) => (
+          <div class="bg-white dark:bg-gray-800 p-6 rounded-xl border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-shadow">
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center">
+                <span class="text-2xl mr-3">{skill.icon}</span>
+                <h3 class="font-semibold text-gray-900 dark:text-white">{skill.name}</h3>
+              </div>
+              <span class={`px-3 py-1 text-xs font-medium rounded-full ${
+                skill.level === 'Avanzado' 
+                  ? 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400' 
+                  : 'bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400'
+              }`}>
+                {skill.level}
+              </span>
+            </div>
+            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+              <div class={`h-2 rounded-full ${
+                skill.level === 'Avanzado' 
+                  ? 'bg-green-500 w-4/5' 
+                  : 'bg-blue-500 w-3/5'
+              }`}></div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
 
-			{finished && <p>I finished this tutorial!</p>}
+    <!-- Projects Section -->
+    <section class="mb-16">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+          Proyectos Destacados
+        </h2>
+        <p class="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+          Algunos de los proyectos en los que he estado trabajando recientemente.
+        </p>
+      </div>
 
-			{
-				goal === 3 ? (
-					<p>My goal is to finish in 3 days.</p>
-				) : (
-					<p>My goal is not 3 days.</p>
-				)
-			}
-		</BaseLayout>
-	</body>
-</html>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {projects.map((project) => (
+          <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+            <div class="p-6">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">{project.title}</h3>
+                <span class={`px-3 py-1 text-xs font-medium rounded-full ${
+                  project.status === 'Producción' 
+                    ? 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400' 
+                    : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400'
+                }`}>
+                  {project.status}
+                </span>
+              </div>
+              <p class="text-gray-600 dark:text-gray-300 mb-4">{project.description}</p>
+              <div class="flex flex-wrap gap-2">
+                {project.tech.map((tech) => (
+                  <span class="px-2 py-1 bg-blue-100 dark:bg-blue-900/20 text-blue-800 dark:text-blue-400 text-xs rounded">
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Contact CTA -->
+    <section class="text-center">
+      <div class="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 md:p-12 text-white">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">
+          ¡Conectemos!
+        </h2>
+        <p class="text-xl mb-8 opacity-90 max-w-2xl mx-auto">
+          Si tienes alguna pregunta, sugerencia, o simplemente quieres charlar sobre tecnología, no dudes en contactarme.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <a 
+            href="https://github.com/carlosmgahete" 
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center px-8 py-3 bg-white text-gray-900 hover:bg-gray-100 rounded-lg font-semibold text-lg transition-colors shadow-lg"
+          >
+            <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 0C4.477 0 0 4.484 0 10.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0110 4.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.942.359.31.678.921.678 1.856 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0020 10.017C20 4.484 15.522 0 10 0z" clip-rule="evenodd"></path>
+            </svg>
+            GitHub
+          </a>
+          <a 
+            href="/blog"
+            class="inline-flex items-center px-8 py-3 bg-white/10 hover:bg-white/20 text-white border border-white/30 rounded-lg font-semibold text-lg transition-colors backdrop-blur-sm"
+          >
+            Lee mi Blog
+            <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
